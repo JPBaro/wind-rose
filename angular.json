@@ -2,5 +2,127 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "FirstWebComponente": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/FirstWebComponente",
+      "sourceRoot": "projects/FirstWebComponente/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/FirstWebComponente",
+            "index": "projects/FirstWebComponente/src/index.html",
+            "main": "projects/FirstWebComponente/src/main.ts",
+            "polyfills": "projects/FirstWebComponente/src/polyfills.ts",
+            "tsConfig": "projects/FirstWebComponente/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/FirstWebComponente/src/favicon.ico",
+              "projects/FirstWebComponente/src/assets"
+            ],
+            "styles": [
+              "projects/FirstWebComponente/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/FirstWebComponente/src/environments/environment.ts",
+                  "with": "projects/FirstWebComponente/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "FirstWebComponente:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "FirstWebComponente:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "FirstWebComponente:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/FirstWebComponente/src/test.ts",
+            "polyfills": "projects/FirstWebComponente/src/polyfills.ts",
+            "tsConfig": "projects/FirstWebComponente/tsconfig.spec.json",
+            "karmaConfig": "projects/FirstWebComponente/karma.conf.js",
+            "assets": [
+              "projects/FirstWebComponente/src/favicon.ico",
+              "projects/FirstWebComponente/src/assets"
+            ],
+            "styles": [
+              "projects/FirstWebComponente/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/FirstWebComponente/tsconfig.app.json",
+              "projects/FirstWebComponente/tsconfig.spec.json",
+              "projects/FirstWebComponente/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/FirstWebComponente/e2e/protractor.conf.js",
+            "devServerTarget": "FirstWebComponente:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "FirstWebComponente:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "FirstWebComponente"
 }

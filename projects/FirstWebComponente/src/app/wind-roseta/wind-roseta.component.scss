@@ -1,0 +1,100 @@
+// COMPASS VIENTO
+#frame {
+  perspective: 500px;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+#rosetaVientos {
+  height: 85%;
+  width: 90%;
+  /* margin: -5%; */
+  position: absolute;
+  transform-style: preserve-3d;
+  transform: rotateX(65deg);
+  transform-origin: bottom;
+  background: none;
+  border-style: outset;
+  border-width: 9px;
+  overflow: visible;
+
+  #bacgroundImg{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+
+  #intensidad {
+    position: absolute;
+    bottom: -25px;
+    right: 0px;
+    transform: rotateX(-65deg);
+    color: black;
+    background: rgba(220, 220, 220, 0.36);
+  }
+
+  #direccion {
+    position: absolute;
+    bottom: -15px;
+    left: 0px;
+    transform: rotateX(-65deg);
+    color: black;
+    background: rgba(220, 220, 220, 0.76);
+  }
+
+  #circle {
+    width: 90%;
+    height: 90%;
+    left: 5%;
+    top: 5%;
+    border-radius: 50%;
+    position: absolute;
+
+    #wFlag {
+      position: absolute;
+      height: 50%;
+      width: 35%;
+      left: 32%;
+    }
+
+    #flagViento {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      transform: rotateX(0deg);
+      transform-origin: center;
+    }
+    #picker {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 40%;
+      margin-top: -21%;
+      width: 30%;
+
+      -webkit-transform-origin: center left;
+      -moz-transform-origin: center left;
+      -ms-transform-origin: center left;
+      -o-transform-origin: center left;
+      transform-origin: center left;
+      #picker-circle {
+        min-width: 100%;
+        max-width: 130%;
+        height: 100%;
+        border-radius: 10%;
+        overflow: visible;
+        background: none;
+        margin: 0 3px 0 auto;
+
+        #windDir {
+          margin-left: 5px;
+          z-index: 1050;
+          height: 100%;
+          max-width: 360px;
+          position: absolute;
+          margin-top: 0%;
+       }
+      }
+    }
+  }
+}
