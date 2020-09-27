@@ -1,13 +1,14 @@
 <div id="frame" >
-<div id="rosetaVientos">
-  <img id="bacgroundImg" src="../../assets/rosette-background.png" >
-  <div id="circle" (pointerdown)="windRosette($event,1)"(pointerup)="windRosette($event,2)" (pointermove)="windRosette($event,0)" >
-    <div id="wFlag"><img id="flagViento" src="assets/wind-dir.png"></div>
-    <div id="picker">
-      <div id="picker-circle" draggable="false" ><img id="windDir" draggable="false" src="assets/ponter-wind.png"></div>
+  <div id="rosetaVientos">
+    <img id="bacgroundImg" src="../../assets/rosette-background.png" >
+    <div id="circle" (pointerdown)="windRosette($event,1)"(pointerup)="windRosette($event,2)" (pointermove)="windRosette($event,0)" >
+      <div id="wFlag"><img id="flagViento" src="assets/wind-dir.png"></div>
+      <div id="picker">
+        <div id="picker-circle" draggable="false" ><img id="windDir" draggable="false" src="assets/ponter-wind.png"></div>
+      </div>
     </div>
+    <a id="intensidad">nulo</a>
+    <a id="direccion">-</a>
   </div>
-  <a id="intensidad">nulo</a>
-  <a id="direccion">-</a>
-</div>
-</div>
+  </div>
+

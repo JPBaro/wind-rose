@@ -13,19 +13,17 @@ export class WindRosetaComponent implements OnInit {
   x; y; movementX; movementY;
   rosetaVisible = false;
   windAngle: any;
-  windInterp: string;
+  windInterpretation: string;
   windIntensity: any;
 
   intensidadColor = ['#f0ecdb', '#ceff99', '#ffff99', '#ffa64d'];
   intensidadTxt = ['nulo', 'brisa', 'medio', 'fuerte'];
-
   moving = false;
 
   constructor() { }
 
   ngOnInit(): void {
   }
-
 
   // VIENTO
   windRosette(ev, nVal) {
@@ -41,10 +39,10 @@ export class WindRosetaComponent implements OnInit {
 
 
       // DRAG
-      const anglNhip = this.anguloVientoCalc(ev.pageX, ev.pageY);
-      this.windAngle = anglNhip.angle;
-      this.windIntensity = this.intensidadViento(anglNhip.hip);
-      this.windInterp = this.direccionInterp(anglNhip.angle, this.windIntensity);
+      const angleNhipot = this.anguloVientoCalc(ev.pageX, ev.pageY);
+      this.windAngle = angleNhipot.angle;
+      this.windIntensity = this.intensidadViento(angleNhipot.hip);
+      this.windInterpretation = this.direccionInterp(angleNhipot.angle, this.windIntensity);
     }
   }
 
@@ -68,63 +66,65 @@ export class WindRosetaComponent implements OnInit {
     return { angle, hip };
   }
 
-  private intensidadViento(hInt) {
+  private intensidadViento(hIntensity) {
 
     const arrowWind = document.getElementById('windDir');
     const badgeIntens = document.getElementById('intensidad');
-    let pos = 0;
+    let posEvent = 0;
     const factor = 6;
-    const ints = hInt / factor;
-    if (hInt <= 30) { pos = 0; }
-    if (hInt > 30 && hInt <= 70) { pos = 1; }
-    if (hInt > 70 && hInt <= 110) { pos = 2; }
-    if (hInt > 110) { pos = 3; }
+    const intsTranslation = hIntensity / factor;
+    if (hIntensity <= 30) { posEvent = 0; }
+    if (hIntensity > 30 && hIntensity <= 70) { posEvent = 1; }
+    if (hIntensity > 70 && hIntensity <= 110) { posEvent = 2; }
+    if (hIntensity > 110) { posEvent = 3; }
 
-    const intensity = Math.round(ints);
-    badgeIntens.innerHTML = `${intensity} km\/h`;
-    badgeIntens.style.background = this.intensidadColor[pos];
-
-    arrowWind.style.width = `${hInt}px`;
-
-    return intensity;
+    const resultIntensity = Math.round(intsTranslation);
+    badgeIntens.innerHTML = `${resultIntensity} km\/h`;
+    badgeIntens.style.background = this.intensidadColor[posEvent];
+    arrowWind.style.width = `${hIntensity}px`;
+    return resultIntensity;
   }
+
   private inclinationCorr() {
-    const rosDispl = document.getElementById('rosetaVientos');
-    const hght = rosDispl.getBoundingClientRect().height;
+    // correction of perspective y pixels
+    const roseElement = document.getElementById('rosetaVientos');
+    const hRose = roseElement.getBoundingClientRect().height;
 
-    console.log("viento px :" + hght);
+    // teor cateto //   180° = A + B + C
+    //                  180° = 90° + 65° + X°
+    // radians       3.14159 = 1.5708 + 1.13446 + radiansSum
+
     const radiansSum = 0.436332;
-    const trueDim = Math.sin(1.5708) * hght / Math.sin(radiansSum);
-    console.log("TRUE px :" + trueDim);
-    const factor = trueDim / hght;
+    const trueDim = Math.sin(1.5708) * hRose / Math.sin(radiansSum);
+    const factor = trueDim / hRose;
 
+    // factor correction perspective
     return factor;
   }
 
   private direccionInterp(ang, ints) {
 
-    let dr = 'contra';
+    let direction = 'contra';
     const badgeDirecc = document.getElementById('direccion');
     const picker = document.getElementById('picker');
     const flag = document.getElementById('wFlag');
 
-    if (ang < 15 && ang >= -15) { dr = 'EAST'; }
-    if (ang < -15 && ang >= -65) { dr = 'NORTH-EAST'; }
-    if (ang < -55 && ang > -110) { dr = 'NORTH'; }
-    if (ang < -110 && ang > -165) { dr = 'NORTH-WEST'; }
-    if (ang < -165 || ang > 165) { dr = 'WEST'; }
-    if (ang < 165 && ang > 110) { dr = 'SOUTH-WEST'; }
-    if (ang < 110 && ang > 65) { dr = 'SOUTH'; }
-    if (ang < 65 && ang > 15) { dr = 'SOUTH-EAST'; }
+    if (ang < 15 && ang >= -15) { direction = 'EAST'; }
+    if (ang < -15 && ang >= -65) { direction = 'NORTH-EAST'; }
+    if (ang < -55 && ang > -110) { direction = 'NORTH'; }
+    if (ang < -110 && ang > -165) { direction = 'NORTH-WEST'; }
+    if (ang < -165 || ang > 165) { direction = 'WEST'; }
+    if (ang < 165 && ang > 110) { direction = 'SOUTH-WEST'; }
+    if (ang < 110 && ang > 65) { direction = 'SOUTH'; }
+    if (ang < 65 && ang > 15) { direction = 'SOUTH-EAST'; }
+    if (ints < 1) { direction = 'NULO'; }
 
-    if (ints < 1) { dr = 'NULO'; }
-
-    badgeDirecc.innerHTML = `Origin: ${dr}  `;
+    badgeDirecc.innerHTML = `Origin: ${direction}  `;
 
     picker.style.transform = 'rotate(' + ang + 'deg)';
     flag.style.transform = 'rotateY(' + ang + 'deg)';
 
-    return dr;
+    return direction;
   }
 
 
